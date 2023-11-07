@@ -15,19 +15,22 @@ def input_error(func):
 
 
 @input_error
-def add_contact(name, phone):
+def add_contact(user_input):
+    _, name, phone = user_input.split(maxsplit=2)
     contacts[name] = phone
     return f"New contact added: {name} - {phone}"
 
 
 @input_error
-def change_phone(name, new_phone):
+def change_phone(user_input):
+    _, name, new_phone = user_input.split(maxsplit=2)
     contacts[name] = new_phone
     return f"Phone number updated for {name}"
 
 
 @input_error
-def get_phone(name):
+def get_phone(user_input):
+    _, name = user_input.split(maxsplit=1)
     phone = contacts[name]
     return f"Phone number for {name}: {phone}"
 
@@ -50,16 +53,13 @@ def main():
         if command == "hello":
             print("How can I help you?")
         elif command.startswith("add"):
-            _, name, phone = command.split(maxsplit=2)
-            result = add_contact(name, phone)
+            result = add_contact(command)
             print(result)
         elif command.startswith("change"):
-            _, name, new_phone = command.split(maxsplit=2)
-            result = change_phone(name, new_phone)
+            result = change_phone(command)
             print(result)
         elif command.startswith("phone"):
-            _, name = command.split(maxsplit=1)
-            result = get_phone(name)
+            result = get_phone(command)
             print(result)
         elif command == "show all":
             result = show_all_contacts()
